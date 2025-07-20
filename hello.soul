@@ -1,5 +1,3 @@
-import "test"
-
 soul genesis() {
     Console.log("Hello World!")
 }
