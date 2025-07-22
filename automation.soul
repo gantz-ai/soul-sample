@@ -1,0 +1,49 @@
+soul genesis() {
+    println("🤖 Soul Robo Module Example")
+    println("==========================")
+
+    // Create a new browser instance
+    browser = Robo.createBrowser({
+        "headless": false, // Set to true for headless mode
+    })
+    if (browser == null) {
+        println("❌ Failed to create browser")
+        return 
+    }
+
+    println("✅ Browser created successfully with keylog")
+
+    // Create a new page
+    page = browser.newPage()
+    if (page == null) {
+        println("❌ Failed to create page")
+        browser.close()
+        return 
+    }
+
+    println("✅ Page created successfully")
+
+    // Navigate to a website
+    println("🌐 Navigating to gantz.ai...")
+    result = page.navigate("https://gantz.ai")
+    if (result == null) {
+        println("❌ Failed to navigate")
+        browser.close()
+        return 
+    }
+
+    // Wait for page to load
+    page.waitForLoad()
+    println("✅ Page loaded successfully")
+
+    // Demonstrate JavaScript evaluation
+    println("⚡ Evaluating JavaScript...")
+    jsResult = page.evaluate("document.getElementsByClassName('container')[0].innerText")
+
+    println("JavaScript Result: " + jsResult)
+
+    // Clean up - close the browser
+    println("🧹 Cleaning up...")
+    browser.close()
+
+}
