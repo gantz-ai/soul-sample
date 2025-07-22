@@ -1,0 +1,40 @@
+soul repeat(targetFunc, times) {
+    println("Creating repeat decorator to run " + times + " times")
+
+    return soul(arg) {
+        println("Repeat decorator: executing " + times + " times")
+        lastResult = null
+
+        i = 0
+        while (i < times) {
+            println("  Execution " + (i + 1) + " of " + times)
+            lastResult = targetFunc(arg)
+            i = i + 1
+        }
+
+        return lastResult
+    }
+}
+
+soul logWith(targetFunc, prefix) {
+    println("Creating logWith decorator with prefix: '" + prefix + "'")
+
+    return soul(arg) {
+        println(prefix + " - About to call function with: " + arg)
+        result = targetFunc(arg) + "123"
+        println(prefix + " - Function returned: " + result)
+        return result
+    }
+}
+
+@repeat(3)
+@logWith("INFO")
+soul processValue(value) {
+    return "Processed: " + value
+}
+
+soul genesis() {
+    println("=== Testing multiple parameterized decorators ===")
+    result = processValue("test")
+    println("Final result: " + result)
+}
